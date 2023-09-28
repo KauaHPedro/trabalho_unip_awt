@@ -16,6 +16,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPopupMenu1 = new javax.swing.JPopupMenu();
         popupConcluido = new javax.swing.JMenuItem();
         popupRemover = new javax.swing.JMenuItem();
+        popupEditar = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         lbTitulo = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -33,7 +34,7 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jPopupMenu1.add(popupConcluido);
 
-        popupRemover.setText("Remover!");
+        popupRemover.setText("Remover");
         popupRemover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 popupRemoverActionPerformed(evt);
@@ -41,15 +42,24 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jPopupMenu1.add(popupRemover);
 
+        popupEditar.setText("Editar");
+        popupEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                popupEditarActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(popupEditar);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gerenciador de Tarefas");
+        setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 204));
 
         lbTitulo.setBackground(new java.awt.Color(0, 153, 0));
         lbTitulo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lbTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbTitulo.setText("<html> <b> Projeto Gerenciador de Tarefas </b> </html>");
+        lbTitulo.setText("<html> <b> Gerenciador de Tarefas</b> </html>");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -70,6 +80,8 @@ public class MainFrame extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 0));
 
+        btAdd.setBackground(new java.awt.Color(255, 255, 204));
+        btAdd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btAdd.setText("Adicionar Tarefa");
         btAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -77,6 +89,8 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        btRemover.setBackground(new java.awt.Color(255, 255, 204));
+        btRemover.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btRemover.setText("Limpar Todas");
         btRemover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,7 +107,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(btAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28))
+                .addGap(36, 36, 36))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,6 +122,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         listaTarefas.setBorder(null);
+        listaTarefas.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         listaTarefas.setModel(new DefaultListModel());
         listaTarefas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -138,8 +153,8 @@ public class MainFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,8 +185,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void popupConcluidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupConcluidoActionPerformed
         int index = listaTarefas.getSelectedIndex();
         if (index != -1) {
-        String tarefa = ((DefaultListModel) listaTarefas.getModel()).getElementAt(index).toString();
-        ((DefaultListModel) listaTarefas.getModel()).set(index, "✔ " + tarefa);
+        listaTarefas.setCellRenderer(new Cores());
         
         
 }
@@ -191,9 +205,19 @@ public class MainFrame extends javax.swing.JFrame {
         int index = listaTarefas.getSelectedIndex();
         if (index != -1) {
         ((DefaultListModel) listaTarefas.getModel()).remove(index);
-}
+        }
 
     }//GEN-LAST:event_popupRemoverActionPerformed
+
+    private void popupEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupEditarActionPerformed
+        int index = listaTarefas.getSelectedIndex();
+        if (index != -1) {
+            String tarefaEditada = JOptionPane.showInputDialog(this, "Digite a Tarefa Corrigida:", "Editar Tarefa", JOptionPane.PLAIN_MESSAGE);
+        if (tarefaEditada != null ) {
+        ((DefaultListModel) listaTarefas.getModel()).set(index, tarefaEditada);
+        }
+      }
+    }//GEN-LAST:event_popupEditarActionPerformed
 
 
     public static void main(String args[]) {
@@ -245,6 +269,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lbTitulo;
     private static javax.swing.JList<String> listaTarefas;
     private javax.swing.JMenuItem popupConcluido;
+    private javax.swing.JMenuItem popupEditar;
     private javax.swing.JMenuItem popupRemover;
     // End of variables declaration//GEN-END:variables
 }
