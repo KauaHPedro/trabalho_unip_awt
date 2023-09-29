@@ -201,7 +201,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddActionPerformed
         String tarefa = JOptionPane.showInputDialog(this, "Digite a Tarefa:", "Adicionar Tarefa", JOptionPane.PLAIN_MESSAGE);
-        if (!tarefa.isEmpty()) {
+        if (tarefa != null && !tarefa.isEmpty()) {
             adicionarTarefaNaLista(tarefa);
         } else {
             JOptionPane.showMessageDialog(this, "Não é permitido adicionar tarefas em branco! Tente novamente!", "Ocorreu um erro!", JOptionPane.ERROR_MESSAGE);
@@ -313,7 +313,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
     
     private void subirTarefa() {
-        int indexAtual = listaTarefas.getSelectedIndex();
+    int indexAtual = listaTarefas.getSelectedIndex();
     DefaultListModel<Tarefa> model = (DefaultListModel<Tarefa>) listaTarefas.getModel();
 
     if (indexAtual > 0) {
