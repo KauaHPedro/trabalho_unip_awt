@@ -7,7 +7,10 @@ public class MainFrame extends javax.swing.JFrame {
     
      public MainFrame() {
         initComponents();
+        listaTarefas.setCellRenderer(new Cores());
     }
+     
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -22,6 +25,8 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         btAdd = new javax.swing.JButton();
         btRemover = new javax.swing.JButton();
+        btSobe = new javax.swing.JButton();
+        btDesce = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         listaTarefas = new javax.swing.JList<>();
@@ -98,30 +103,54 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        btSobe.setBackground(new java.awt.Color(255, 255, 204));
+        btSobe.setIcon(new javax.swing.ImageIcon("C:\\Users\\kauah\\Downloads\\pra-cima.png")); // NOI18N
+        btSobe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSobeActionPerformed(evt);
+            }
+        });
+
+        btDesce.setBackground(new java.awt.Color(255, 255, 204));
+        btDesce.setIcon(new javax.swing.ImageIcon("C:\\Users\\kauah\\Downloads\\seta-para-baixo.png")); // NOI18N
+        btDesce.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btDesceActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(btAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btAdd)
+                    .addComponent(btSobe, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btDesce, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(38, 38, 38))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                    .addComponent(btAdd)
+                    .addComponent(btRemover))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btDesce, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                    .addComponent(btSobe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBackground(new java.awt.Color(255, 255, 204));
 
-        listaTarefas.setBorder(null);
+        listaTarefas.setBackground(new java.awt.Color(255, 255, 204));
         listaTarefas.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         listaTarefas.setModel(new DefaultListModel());
         listaTarefas.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -144,7 +173,7 @@ public class MainFrame extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -172,8 +201,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddActionPerformed
         String tarefa = JOptionPane.showInputDialog(this, "Digite a Tarefa:", "Adicionar Tarefa", JOptionPane.PLAIN_MESSAGE);
-        if (tarefa != null ) {
+        if (!tarefa.isEmpty()) {
             adicionarTarefaNaLista(tarefa);
+        } else {
+            JOptionPane.showMessageDialog(this, "Não é permitido adicionar tarefas em branco! Tente novamente!", "Ocorreu um erro!", JOptionPane.ERROR_MESSAGE);
         }
         
     }//GEN-LAST:event_btAddActionPerformed
@@ -185,9 +216,9 @@ public class MainFrame extends javax.swing.JFrame {
     private void popupConcluidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupConcluidoActionPerformed
         int index = listaTarefas.getSelectedIndex();
         if (index != -1) {
-        listaTarefas.setCellRenderer(new Cores());
-        
-        
+        Tarefa tarefa = (Tarefa) listaTarefas.getModel().getElementAt(index);
+        tarefa.setConcluida(true);
+        listaTarefas.repaint();
 }
     }//GEN-LAST:event_popupConcluidoActionPerformed
 
@@ -204,7 +235,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void popupRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupRemoverActionPerformed
         int index = listaTarefas.getSelectedIndex();
         if (index != -1) {
-        ((DefaultListModel) listaTarefas.getModel()).remove(index);
+        ((DefaultListModel<Tarefa>) listaTarefas.getModel()).remove(index);
         }
 
     }//GEN-LAST:event_popupRemoverActionPerformed
@@ -212,14 +243,27 @@ public class MainFrame extends javax.swing.JFrame {
     private void popupEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupEditarActionPerformed
         int index = listaTarefas.getSelectedIndex();
         if (index != -1) {
-            String tarefaEditada = JOptionPane.showInputDialog(this, "Digite a Tarefa Corrigida:", "Editar Tarefa", JOptionPane.PLAIN_MESSAGE);
-        if (tarefaEditada != null ) {
-        ((DefaultListModel) listaTarefas.getModel()).set(index, tarefaEditada);
+        Tarefa tarefaOriginal = (Tarefa) listaTarefas.getModel().getElementAt(index);
+        String tarefaEditada = JOptionPane.showInputDialog(this, "Digite a Tarefa Corrigida:", "Editar Tarefa", JOptionPane.PLAIN_MESSAGE);
+        if (tarefaEditada != null && !tarefaEditada.isEmpty()) {
+            Tarefa novaTarefa = new Tarefa(tarefaEditada);
+            novaTarefa.setConcluida(tarefaOriginal.isConcluida());
+            ((DefaultListModel<Tarefa>) listaTarefas.getModel()).set(index, novaTarefa);
+        } else {
+            JOptionPane.showMessageDialog(this, "Não é permitido deixar a tarefa em branco! Tente novamente!", "Ocorreu um erro!", JOptionPane.ERROR_MESSAGE);
+            }
         }
-      }
     }//GEN-LAST:event_popupEditarActionPerformed
 
+    private void btSobeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSobeActionPerformed
+        subirTarefa();
+    }//GEN-LAST:event_btSobeActionPerformed
 
+    private void btDesceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDesceActionPerformed
+        descerTarefa();
+    }//GEN-LAST:event_btDesceActionPerformed
+
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -253,21 +297,47 @@ public class MainFrame extends javax.swing.JFrame {
     }
     
     public void adicionarTarefaNaLista(String tarefa) {
-    ((DefaultListModel) listaTarefas.getModel()).addElement(tarefa);
+    ((DefaultListModel<Tarefa>) listaTarefas.getModel()).addElement(new Tarefa(tarefa));
 }
+    
+    private void descerTarefa() {
+        int indexAtual = listaTarefas.getSelectedIndex();
+        DefaultListModel<Tarefa> model = (DefaultListModel<Tarefa>) listaTarefas.getModel();
+        
+        if (indexAtual < model.getSize() - 1) {
+        Tarefa tarefa = model.getElementAt(indexAtual);
+        model.remove(indexAtual);
+        model.add(indexAtual + 1, tarefa);
+        listaTarefas.setSelectedIndex(indexAtual + 1);
+        }
+    }
+    
+    private void subirTarefa() {
+        int indexAtual = listaTarefas.getSelectedIndex();
+    DefaultListModel<Tarefa> model = (DefaultListModel<Tarefa>) listaTarefas.getModel();
+
+    if (indexAtual > 0) {
+        Tarefa tarefa = model.getElementAt(indexAtual);
+        model.remove(indexAtual);
+        model.add(indexAtual - 1, tarefa);
+        listaTarefas.setSelectedIndex(indexAtual - 1);
+    }
+ }
     
 ;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAdd;
+    private javax.swing.JButton btDesce;
     private javax.swing.JButton btRemover;
+    private javax.swing.JButton btSobe;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbTitulo;
-    private static javax.swing.JList<String> listaTarefas;
+    private javax.swing.JList<Tarefa> listaTarefas;
     private javax.swing.JMenuItem popupConcluido;
     private javax.swing.JMenuItem popupEditar;
     private javax.swing.JMenuItem popupRemover;
